@@ -97,8 +97,8 @@
 <body>
     <div class="container">
         <div class="hero">
-            <h1>Welcome to Our Platform</h1>
-            <p>Experience the future of digital innovation with our cutting-edge solutions powered by Statsig analytics.</p>
+            <h1 id="dynamic-title">Welcome to Our Platform</h1>
+            <p id="dynamic-description">Experience the future of digital innovation with our cutting-edge solutions powered by Statsig analytics.</p>
             <a href="#features" class="cta-button" id="explore-features">Explore Features</a>
         </div>
 
@@ -159,7 +159,7 @@
                 const { StatsigClient, runStatsigAutoCapture, runStatsigSessionReplay } = window.Statsig;
                 
                 const client = new StatsigClient(
-                    'client-uYspSuX83wAv4zohVqdfSLEKSsh7uxvQxLJplNiO97N',
+                    'client-L98wggdS4jRBfJrhdRc0lP4CtT8EmFnoJ9d0JF5671f',
                     { 
                         userID: 'test-user-' + Date.now(),
                         environment: { tier: 'development' }
@@ -173,6 +173,14 @@
                 // Initialize the client
                 await client.initializeAsync();
                 console.log('Statsig initialized successfully');
+
+                // Get dynamic_home_config
+                const dynamicConfig = client.getDynamicConfig('dynamic_home_config');
+                
+                // Update content with dynamic values
+                document.getElementById('dynamic-title').textContent = dynamicConfig.value['title'] || 'NA';
+                document.getElementById('dynamic-description').textContent = dynamicConfig.value['description'] || 'NA';
+                document.getElementById('explore-features').textContent = dynamicConfig.value['cta_text'] || 'NA';
                 
                 // Set up event handlers
                 setupEventHandlers(client);

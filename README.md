@@ -21,6 +21,7 @@ This project demonstrates the integration of Statsig analytics into a modern lan
 - Added session replay and auto-capture features
 - Configured development environment settings
 - Implemented proper error handling
+- Integrated dynamic configuration for content management
 
 ```javascript
 const { StatsigClient, runStatsigAutoCapture, runStatsigSessionReplay } = window.Statsig;
@@ -33,7 +34,27 @@ const client = new StatsigClient(
 );
 ```
 
-### 3. Event Tracking Implementation
+### 3. Dynamic Configuration
+The landing page uses Statsig's Dynamic Config feature to manage content:
+
+```javascript
+// Fetching dynamic configuration
+const dynamicConfig = client.getDynamicConfig('dynamic_home_config');
+
+// Configuration structure
+{
+  "title": "Welcome to Our Platform.",
+  "description": "Experience the future of digital innovation with our cutting-edge solutions powered by Statsig analytics.",
+  "cta_text": "Explore Features"
+}
+```
+
+The dynamic configuration allows real-time updates to:
+- Main hero title
+- Description text
+- CTA button text
+
+### 4. Event Tracking Implementation
 The following events are tracked:
 
 1. **Page View Event**
@@ -54,7 +75,7 @@ The following events are tracked:
      - Card title
      - Interaction type
 
-### 4. Additional Features
+### 5. Additional Features
 - Session replay enabled for detailed user interaction analysis
 - Auto-capture enabled for automatic event tracking
 - Async initialization with proper error handling
